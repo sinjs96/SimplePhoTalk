@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "125133567838",
+    "firebase_url": "https://simplephotalk-default-rtdb.firebaseio.com",
+    "project_id": "simplephotalk",
+    "storage_bucket": "simplephotalk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125133567838:android:b06bb4ada713cb132b01cf",
+        "android_client_info": {
+          "package_name": "com.example.simplephotalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125133567838-2h7ov4j3vjv3lnuoqijqaib5bgb4q5fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNlY1kfL-BGIZ-kMovH0TG_b3xlL3s-1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125133567838-2h7ov4j3vjv3lnuoqijqaib5bgb4q5fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
