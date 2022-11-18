@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:id="@+id/detailviewitem_profile_image"
+            android:src="@mipmap/ic_launcher"
+            android:layout_margin="7.5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <TextView
+            android:text="User name"
+            android:id="@+id/detailviewitem_profile_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="DuplicateIds" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/detailviewitem_imageview_content"
+        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:contentDescription="TODO" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+<!--        좋아요-->
+        <ImageView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/detailviewitem_favorite_imageview"
+            android:src="@drawable/ic_favorite_border"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+<!--        댓글-->
+        <ImageView
+            android:id="@+id/detailviewitem_comment_imageview"
+            android:src="@drawable/ic_chat_black"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+    </LinearLayout>
+<!--    좋아요 갯수-->
+    <TextView
+        android:id="@+id/detailviewitem_favoritecounter_textview"
+        android:text="like 0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:id="@+id/detailviewitem_explain_textview"
+        android:text="Explain content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
