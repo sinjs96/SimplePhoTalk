@@ -1,5 +1,6 @@
 package com.example.simplephotalk.navigation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.simplephotalk.R
+import com.example.simplephotalk.navigation.model.AlarmDTO
 import com.example.simplephotalk.navigation.model.ContentDTO
+import com.example.simplephotalk.navigation.util.FcmPush
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -94,6 +97,12 @@ class DetailViewFragment : Fragment(){
                 fragment.arguments = bundle
                 activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_content,fragment)?.commit()
             }
+            viewholder.detailviewitem_comment_imageview.setOnClickListener{ v ->
+                var intent = Intent(v.context, CommentActivity::class.java)
+                intent.putExtra("contentUid", contentUidList[p1])
+                intent.putExtra("destinationUid", contentDTOs[p1].uid)
+                startActivity(intent)
+            }
 
         }
 
@@ -101,6 +110,10 @@ class DetailViewFragment : Fragment(){
           return contentDTOs.size
         }
         fun favoriteEvent(positon: Int) {
+
+            //오류나서 넣은건데 될진 모르겠어요...
+            var position : Int? = null
+
             var tsDoc = firestore?.collection("images")?.document(contentUidList[positon])
             firestore?.runTransaction { transaction ->
 
@@ -115,9 +128,23 @@ class DetailViewFragment : Fragment(){
                     //버튼 클릭 x
                     contentDTO?.favoriteCount = contentDTO?.favoriteCount?.plus(1)!!
                     contentDTO?.favorites?.set(uid!!, true)
+                    favoriteAlarm(contentDTOs[position!!].uid!!)
+                    //                                 ^ 원래 느낌표가 없었음
                 }
                 transaction.set(tsDoc,contentDTO)
         }
     }
+        fun favoriteAlarm(destinationUid : String){
+            var alarmDTO = AlarmDTO()
+            alarmDTO.destinationUid = destinationUid
+            alarmDTO.userId = FirebaseAuth.getInstance().currentUser?.email
+            alarmDTO.uid = FirebaseAuth.getInstance().currentUser?.uid
+            alarmDTO.kind = 0
+            alarmDTO.timestamp = System.currentTimeMillis()
+            FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
+
+            var message = FirebaseAuth.getInstance()?.currentUser?.email + getString(R.string.alarm_favorite)
+            FcmPush.instance.sendMessage(destinationUid,"SimplePhoTalk",message)
+        }
 }
 }
