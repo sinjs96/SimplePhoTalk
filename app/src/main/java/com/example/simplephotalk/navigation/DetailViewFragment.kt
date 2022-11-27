@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.example.simplephotalk.R
 import com.example.simplephotalk.navigation.model.AlarmDTO
 import com.example.simplephotalk.navigation.model.ContentDTO
-import com.example.simplephotalk.navigation.util.FcmPush
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -26,12 +25,18 @@ class DetailViewFragment : Fragment(){
     var uid : String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = LayoutInflater.from(activity).inflate(R.layout.fragment_alarm,container,false)
+        var view = LayoutInflater.from(activity).inflate(R.layout.fragment_detail,container,false)
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().currentUser?.uid
 
-        view.detailviewfragment_reyclerview.adapter = DetailViewRecyclerViewAdapter()
-        view.detailviewfragment_reyclerview.layoutManager = LinearLayoutManager(activity)
+
+
+        view.detailviewfragment_recyclerview.adapter = DetailViewRecyclerViewAdapter()
+        view.detailviewfragment_recyclerview.layoutManager = LinearLayoutManager(activity)
+
+//        view.detailviewfragment_reyclerview.adapter = DetailViewRecyclerViewAdapter()
+//        view.detailviewfragment_reyclerview.layoutManager = LinearLayoutManager(activity)
+//
         return view
     }
     inner class DetailViewRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -40,6 +45,7 @@ class DetailViewFragment : Fragment(){
 
         init{
 
+            //image
             firestore?.collection("images")?.orderBy("timestamp")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 contentDTOs.clear()
                 contentUidList.clear()
@@ -53,7 +59,7 @@ class DetailViewFragment : Fragment(){
                 notifyDataSetChanged()
             }
 
-            }
+        }
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
             var view = LayoutInflater.from(p0.context).inflate(R.layout.item_detail,p0,false)
             return CustomViewHolder(view)
@@ -107,7 +113,7 @@ class DetailViewFragment : Fragment(){
         }
 
         override fun getItemCount(): Int {
-          return contentDTOs.size
+            return contentDTOs.size
         }
         fun favoriteEvent(positon: Int) {
 
@@ -132,8 +138,8 @@ class DetailViewFragment : Fragment(){
                     //                                 ^ 원래 느낌표가 없었음
                 }
                 transaction.set(tsDoc,contentDTO)
+            }
         }
-    }
         fun favoriteAlarm(destinationUid : String){
             var alarmDTO = AlarmDTO()
             alarmDTO.destinationUid = destinationUid
@@ -143,8 +149,8 @@ class DetailViewFragment : Fragment(){
             alarmDTO.timestamp = System.currentTimeMillis()
             FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
 
-            var message = FirebaseAuth.getInstance()?.currentUser?.email + getString(R.string.alarm_favorite)
-            FcmPush.instance.sendMessage(destinationUid,"SimplePhoTalk",message)
+            //var message = FirebaseAuth.getInstance()?.currentUser?.email + getString(R.string.alarm_favorite)
+            //FcmPush.instance.sendMessage(destinationUid,"Howlstagram",message)
         }
-}
+    }
 }

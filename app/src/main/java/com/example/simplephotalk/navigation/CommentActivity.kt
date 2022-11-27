@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.simplephotalk.R
 import com.example.simplephotalk.navigation.model.AlarmDTO
 import com.example.simplephotalk.navigation.model.ContentDTO
-import com.example.simplephotalk.navigation.util.FcmPush
+//import com.example.simplephotalk.navigation.util.FcmPush
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_comment.*
@@ -53,7 +55,7 @@ class CommentActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
 
         var msg = FirebaseAuth.getInstance().currentUser?.email + " " + getString(R.string.alarm_comment) + " of " + message
-        FcmPush.instance.sendMessage(destinationUid,"SimplePhoTalk",msg)
+        //FcmPush.instance.sendMessage(destinationUid,"SimplePhoTalk",msg)
     }
 
     inner class CommentRecyclerviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){

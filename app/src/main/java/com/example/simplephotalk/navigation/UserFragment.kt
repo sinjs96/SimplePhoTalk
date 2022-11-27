@@ -21,7 +21,6 @@ import com.example.simplephotalk.R
 import com.example.simplephotalk.navigation.model.AlarmDTO
 import com.example.simplephotalk.navigation.model.ContentDTO
 import com.example.simplephotalk.navigation.model.FollowDTO
-import com.example.simplephotalk.navigation.util.FcmPush
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
@@ -140,7 +139,7 @@ class   UserFragment : Fragment(){
 
                 transaction.set(tsDocFollower,followDTO!!)
                 return@runTransaction
-        }
+            }
             if(followDTO!!.followers.containsKey(currentUserUid!!)){
                 //It cancel my follower when I follow a third person
                 followDTO!!.followerCount = followDTO!!.followerCount - 1
@@ -165,8 +164,8 @@ class   UserFragment : Fragment(){
         alarmDTO.timestamp = System.currentTimeMillis()
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
 
-        var message = auth?.currentUser?.email + getString(R.string.alarm_follow)
-        FcmPush.instance.sendMessage(destinationUid,"SimplePhoTalk",message)
+//        var message = auth?.currentUser?.email + getString(R.string.alarm_follow)
+//        FcmPush.instance.sendMessage(destinationUid,"Howlstagram",message)
     }
 
 
@@ -195,7 +194,7 @@ class   UserFragment : Fragment(){
         }
 
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
-           var width = resources.displayMetrics.widthPixels / 3
+            var width = resources.displayMetrics.widthPixels / 3
 
             var imageview = ImageView(p0.context)
             imageview.layoutParams = LinearLayoutCompat.LayoutParams(width,width)

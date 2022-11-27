@@ -37,6 +37,12 @@ class AddPhotoActivity : AppCompatActivity() {
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
 
+        addphoto_image.setOnClickListener {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+        }
+
         //add image upload event
         addphoto_btn_upload.setOnClickListener {
             contentUpload()
@@ -45,17 +51,19 @@ class AddPhotoActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICK_IMAGE_FROM_ALBUM){
+        if (requestCode == PICK_IMAGE_FROM_ALBUM) {
+            //이미지 선택시
             if(resultCode == Activity.RESULT_OK){
-                //This is path to the selected image
+                //이미지뷰에 이미지 세팅
+                println(data?.data)
                 photoUri = data?.data
-                addphoto_image.setImageURI(photoUri)
-
-            }else{
-                //Exit the addPhotoActivity if you leave the album without selecting it
-                finish()
-
+                addphoto_image.setImageURI(data?.data)
             }
+
+            else{
+                finish()
+            }
+
         }
     }
     fun contentUpload(){
